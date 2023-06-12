@@ -8,19 +8,56 @@ export class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: []
+      urls: [],
+      errorMessage: ''
     }
   }
 
   componentDidMount() {
-  }
+  getUrls()
+      .then(urlData => {
+        this.setState({
+         urls: urlData.urls,
+        });
+      })
+      .catch(error => {
+        this.setState({
+          errorMessage: error.message
+        })
+      })
+    }
+  
+    addUrl = (newUrl) => {
+      fetch("http://localhost:3001/api/v1/urls", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newUrl)
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Failed to add URL. Please try again.");
+          }
+          return res.json();
+        })
+        .then(url => {
+          this.setState({ urls: [...this.state.urls, url], errorMessage: "" });
+        })
+        .catch(error => {
+          this.setState({
+            errorMessage: error.message
+          });
+        });
+    }
 
   render() {
+    console.log(this.state.urls)
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm addUrl= {this.addUrl}/>
         </header>
 
         <UrlContainer urls={this.state.urls}/>
@@ -28,5 +65,6 @@ export class App extends Component {
     );
   }
 }
+
 
 export default App;
