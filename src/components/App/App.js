@@ -52,7 +52,11 @@ export class App extends Component {
     }
 
   render() {
-    console.log(this.state.urls)
+ if(this.state.errorMessage) {
+  return (
+    <p>{this.state.errorMessage}</p>
+  )
+ }
     return (
       <main className="App">
         <header>

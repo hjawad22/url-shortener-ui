@@ -23,12 +23,12 @@ describe('homepage spec', () => {
     cy.get('[placeholder="URL to Shorten..."]').should('have.attr', 'placeholder', 'URL to Shorten...');
   });
 
-  it('Should reflect the information the user fill out in the input fields', () => {
+  it('Should reflect the information the users fill out in the input fields', () => {
     cy.get('[placeholder="URL to Shorten..."]').type('this is a url')
     cy.get('[placeholder="Title..."]').type('this is a title')
   });
 
-  it('should have a form', () => {
+  it(' Should render a new shortened URL when user inputs fields and submits', () => {
     cy.get('[placeholder="URL to Shorten..."]').type('https://images.unsplash.com/photo')
     cy.get('[placeholder="Title..."]').type('this is a title')
     cy.intercept("POST", "http://localhost:3001/api/v1/urls", {
