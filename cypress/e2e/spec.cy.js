@@ -36,7 +36,7 @@ describe('homepage spec', () => {
         fixture: "url"
       })
     cy.get('.submit-button').click()
-     .get('.url').contains('.title','this is a title')
+    cy.get(':nth-child(5) > .title').contains('.title','this is a title')
      .get('.url').contains('.link', 'http://localhost:3001/useshorturl/5') 
      .get(':nth-child(5) > p').contains('https://images.unsplash.com/photo')
   });
